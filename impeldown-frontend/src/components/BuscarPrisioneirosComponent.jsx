@@ -1,30 +1,17 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import buscarPrisioneiros from '../services/PrisioneiroService';
 
 const BuscarPrisioneirosComponent = () => {
 
-  const dummyData = [
-    {
-      "nome": "luis",
-      "idade": 22,
-      "nivelPerigo": "BAIXO",
-      "crime": "amigo do luffy",
-      "nivelSeguranca": "ESCARLATE"
-    },
-    {
-      "nome": "gabriel",
-      "idade": 20,
-      "nivelPerigo": "BAIXO",
-      "crime": "trabalha a tarde",
-      "nivelSeguranca": "ESCARLATE"
-    },
-    {
-      "nome": "caua",
-      "idade": 20,
-      "nivelPerigo": "BAIXO",
-      "crime": "problema ao abrir conta no santander",
-      "nivelSeguranca": "ESCARLATE"
-    }
-  ]
+  const [prisioneiros, setPrisioneiros] = useState([])
+
+  useEffect(() => {
+    buscarPrisioneiros().then((response) => {
+      setPrisioneiros(response.data);
+    }).catch(error => {
+      console.error(error);
+    })
+  }, [])
 
   return (
     <div className='container'>
@@ -42,7 +29,7 @@ const BuscarPrisioneirosComponent = () => {
         </thead>
         <tbody>
           {
-            dummyData.map(prisioneiro =>
+            prisioneiros.map(prisioneiro =>
               <tr key={prisioneiro.nome}>
                 <td>{prisioneiro.nome}</td>
                 <td>{prisioneiro.idade}</td>
