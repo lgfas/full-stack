@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react'
-import buscarPrisioneiros from '../services/PrisioneiroService';
+import { buscarPrisioneiros } from '../services/PrisioneiroService';
+import { useNavigate } from 'react-router-dom';
 
 const BuscarPrisioneirosComponent = () => {
 
   const [prisioneiros, setPrisioneiros] = useState([])
+
+  const navigator = useNavigate();
 
   useEffect(() => {
     buscarPrisioneiros().then((response) => {
@@ -13,9 +16,15 @@ const BuscarPrisioneirosComponent = () => {
     })
   }, [])
 
+  function adicionarPrisioneiro() {
+    navigator('/adicionar-prisioneiro')
+  }
+
   return (
     <div className='container'>
       <h2 className='text-center'>Lista de Prisioneiros</h2>
+
+      <button className='btn btn-primary mb-2' onClick={adicionarPrisioneiro}>Adicionar Prisioneiro</button>
 
       <table className='table table-striped table-bordered'>
         <thead>
