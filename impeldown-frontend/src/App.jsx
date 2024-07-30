@@ -18,6 +18,8 @@ function App() {
         <Route path='/prisioneiros' element = {<BuscarPrisioneirosComponent/>}></Route>
         {/* // http://localhost:3000/adicionar-prisioneiro */}
         <Route path='/adicionar-prisioneiro' element = {<PrisioneiroComponent/>}></Route>
+        {/* // http://localhost:3000/atualizar-prisioneiro/1 */}
+        <Route path='/atualizar-prisioneiro/:id' element = {<PrisioneiroComponent/>}></Route>
       </Routes>
       <FooterComponent/>
     </BrowserRouter>

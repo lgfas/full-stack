@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { buscarPrisioneiros } from '../services/PrisioneiroService';
+import { buscarPrisioneiros, removerPrisioneiro } from '../services/PrisioneiroService';
 import { useNavigate } from 'react-router-dom';
 
 const BuscarPrisioneirosComponent = () => {
@@ -9,15 +9,33 @@ const BuscarPrisioneirosComponent = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
+    buscarTodosPrisioneiros();
+  }, [])
+
+  function buscarTodosPrisioneiros() {
     buscarPrisioneiros().then((response) => {
       setPrisioneiros(response.data);
     }).catch(error => {
       console.error(error);
     })
-  }, [])
+  }
 
   function adicionarPrisioneiro() {
     navigator('/adicionar-prisioneiro')
+  }
+
+  function atualizarPrisioneiro(id) {
+    navigator(`/atualizar-prisioneiro/${id}`)
+  }
+
+  function apagarPrisioneiro(id) {
+    console.log(id);
+
+    removerPrisioneiro(id).then((response) => {
+      buscarTodosPrisioneiros();
+    }).catch((error) => {
+      console.error(error);
+    });
   }
 
   return (
@@ -34,17 +52,22 @@ const BuscarPrisioneirosComponent = () => {
             <th>Nivel de Perigo</th>
             <th>Crime</th>
             <th>Nivel de Seguranca</th>
+            <th>Ações</th>
           </tr>
         </thead>
         <tbody>
           {
             prisioneiros.map(prisioneiro =>
-              <tr key={prisioneiro.nome}>
+              <tr key={prisioneiro.id}>
                 <td>{prisioneiro.nome}</td>
                 <td>{prisioneiro.idade}</td>
                 <td>{prisioneiro.nivelPerigo}</td>
                 <td>{prisioneiro.crime}</td>
                 <td>{prisioneiro.nivelSeguranca}</td>
+                <td style={{display: 'flex', gap:'10px'}}>
+                  <button className='btn btn-info' onClick={() => atualizarPrisioneiro(prisioneiro.id)}>Atualizar</button>
+                  <button className='btn btn-danger' onClick={() => apagarPrisioneiro(prisioneiro.id)}>Remover</button>
+                </td>
               </tr>
             )
           }
