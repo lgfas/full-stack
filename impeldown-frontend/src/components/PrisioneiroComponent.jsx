@@ -72,45 +72,46 @@ const PrisioneiroComponent = () => {
 
   function validarFormulario() {
     let valid = true;
-    const errorsCopy = {... errors}
-
+    const errorsCopy = { ...errors };
+  
     if (nome.trim()) {
       errorsCopy.nome = '';
     } else {
-      errorsCopy.nome = 'Campo obrigatorio';
+      errorsCopy.nome = 'Campo obrigatório';
       valid = false;
     }
-
-    if (idade.trim()) {
+  
+    // Garanta que idade, nivelPerigo, crime e nivelSeguranca sejam strings
+    if (String(idade).trim()) {
       errorsCopy.idade = '';
     } else {
-      errorsCopy.idade = 'Campo obrigatorio';
+      errorsCopy.idade = 'Campo obrigatório';
       valid = false;
     }
-
-    if (nivelPerigo.trim()) {
+  
+    if (String(nivelPerigo).trim()) {
       errorsCopy.nivelPerigo = '';
     } else {
-      errorsCopy.nivelPerigo = 'Campo obrigatorio';
+      errorsCopy.nivelPerigo = 'Campo obrigatório';
       valid = false;
     }
-
-    if (crime.trim()) {
+  
+    if (String(crime).trim()) {
       errorsCopy.crime = '';
     } else {
-      errorsCopy.crime = 'Campo obrigatorio';
+      errorsCopy.crime = 'Campo obrigatório';
       valid = false;
     }
-
-    if (nivelSeguranca.trim()) {
+  
+    if (String(nivelSeguranca).trim()) {
       errorsCopy.nivelSeguranca = '';
     } else {
-      errorsCopy.nivelSeguranca = 'Campo obrigatorio';
+      errorsCopy.nivelSeguranca = 'Campo obrigatório';
       valid = false;
     }
-
+  
     setErrors(errorsCopy);
-
+  
     return valid;
   }
 
